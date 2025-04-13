@@ -12,13 +12,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.gymlog_project.database.Entities.GymLog;
+import com.example.gymlog_project.database.GymLogRepository;
 import com.example.gymlog_project.databinding.ActivityMainBinding;
 
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
+    private GymLogRepository repository;
 
     public static final String TAG = "DAC_GYMLOG";
     String Exercise = "";
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
+        repository = new GymLogRepository(getApplication());
+
         binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
 
         binding.logButton.setOnClickListener(new View.OnClickListener() {
@@ -58,9 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "IT WORKED!", Toast.LENGTH_SHORT).show();
                 // a "Toast" is a simple pop up message that appears briefly on the screen.
 
+                insertGymLogRecord();
                 updateDisplay();
             }
         });
+    }
+
+    private void insertGymLogRecord(){
+        GymLog log = new GymLog(Exercise, Weight, Reps);
+        repository.insertGymLog(log);
     }
 
     private void updateDisplay(){
@@ -92,8 +103,5 @@ public class MainActivity extends AppCompatActivity {
         catch(NumberFormatException e){
             Log.d(TAG, "Error reading value from reps edit text.");
         }
-
-
     }
-
 }
