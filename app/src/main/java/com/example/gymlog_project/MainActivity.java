@@ -16,6 +16,7 @@ import com.example.gymlog_project.database.Entities.GymLog;
 import com.example.gymlog_project.database.GymLogRepository;
 import com.example.gymlog_project.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 // note: type DAC_GYMLOG into logcat to see possible errors
@@ -55,16 +56,12 @@ public class MainActivity extends AppCompatActivity {
         repository = GymLogRepository.getRepository(getApplication());
 
         binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
-
+        updateDisplay();
         binding.logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 getInformationFromDisplay();
-
-                //Toast.makeText(MainActivity.this, "IT WORKED!", Toast.LENGTH_SHORT).show();
-                // a "Toast" is a simple pop up message that appears briefly on the screen.
-
                 insertGymLogRecord();
                 updateDisplay();
             }
@@ -72,16 +69,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertGymLogRecord(){
+        if(Exercise.isEmpty()){
+            return;
+        }
         GymLog log = new GymLog(Exercise, Weight, Reps);
         repository.insertGymLog(log);
     }
 
     private void updateDisplay(){
-        String currentInfo = binding.logDisplayTextView.getText().toString();
-        Log.d(TAG, "current info: "+currentInfo);
-        String newDisplay = String.format(Locale.US,"Exercise:%s%nWeight:%.2f%nReps:%d%n=-=-=-=%n%s", Exercise, Weight, Reps, currentInfo);
-        binding.logDisplayTextView.setText(newDisplay);
-        Log.i(TAG, repository.getAllLogs().toString());
+        ArrayList<GymLog> allLogs = repository.getAllLogs();
+        if(allLogs.isEmpty()){
+            binding.logDisplayTextView.setText(R.string.nothing_to_show_time_to_hit_the_gym);
+        }
+        StringBuilder sb = new StringBuilder();
+        for(GymLog log : allLogs){
+            sb.append(log);
+        }
+        binding.logDisplayTextView.setText(sb.toString());
     }
 
     private void getInformationFromDisplay(){
