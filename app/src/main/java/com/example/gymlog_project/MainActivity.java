@@ -18,6 +18,8 @@ import com.example.gymlog_project.databinding.ActivityMainBinding;
 
 import java.util.Locale;
 
+// note: type DAC_GYMLOG into logcat to see possible errors
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-        repository = new GymLogRepository(getApplication());
+        repository = GymLogRepository.getRepository(getApplication());
 
         binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
 
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
                 getInformationFromDisplay();
 
-                Toast.makeText(MainActivity.this, "IT WORKED!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "IT WORKED!", Toast.LENGTH_SHORT).show();
                 // a "Toast" is a simple pop up message that appears briefly on the screen.
 
                 insertGymLogRecord();
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "current info: "+currentInfo);
         String newDisplay = String.format(Locale.US,"Exercise:%s%nWeight:%.2f%nReps:%d%n=-=-=-=%n%s", Exercise, Weight, Reps, currentInfo);
         binding.logDisplayTextView.setText(newDisplay);
+        Log.i(TAG, repository.getAllLogs().toString());
     }
 
     private void getInformationFromDisplay(){
