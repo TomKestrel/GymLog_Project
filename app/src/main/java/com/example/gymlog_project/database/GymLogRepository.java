@@ -71,7 +71,7 @@ public class GymLogRepository {
     public void insertUser(User... user){
         GymLogDatabase.databaseWriteExecutor.execute(()->
         {
-            userDao.insert(user);
+            userDAO.insert(user);
         });
     }
 
