@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     double Weight = 0.0;
     int Reps = 0;
 
+    //TODO: Add login information
+    int loggedInUserId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {                // This is the first method that will run when the app is shown
         super.onCreate(savedInstanceState);                             // This basically means "run the default setup first" (before we start adding our own code in)
@@ -66,13 +69,20 @@ public class MainActivity extends AppCompatActivity {
                 updateDisplay();
             }
         });
+
+        binding.exerciseInputEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDisplay();
+            }
+        });
     }
 
     private void insertGymLogRecord(){
         if(Exercise.isEmpty()){
             return;
         }
-        GymLog log = new GymLog(Exercise, Weight, Reps);
+        GymLog log = new GymLog(Exercise, Weight, Reps, loggedInUserId);
         repository.insertGymLog(log);
     }
 
