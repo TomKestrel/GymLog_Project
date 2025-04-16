@@ -75,7 +75,7 @@ public class GymLogRepository {
         });
     }
 
-    public User findUserByUserName(String username) {
+    public User getUserByUserName(String username) {
         Future<User> future = GymLogDatabase.databaseWriteExecutor.submit(
                 new Callable<User>() {
                     @Override

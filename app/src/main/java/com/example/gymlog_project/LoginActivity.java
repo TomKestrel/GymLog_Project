@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             toastMaker("username should not be blank");
             return false;
         }
-        user = repository.findUserByUserName(username);
+        user = repository.getUserByUserName(username);
         if(user != null){
             String password = binding.passwordLoginEditText.getText().toString();
             if(password.equals(user.getPassword())){
