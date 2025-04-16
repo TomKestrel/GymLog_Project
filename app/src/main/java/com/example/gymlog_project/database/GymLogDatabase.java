@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 public abstract class GymLogDatabase extends RoomDatabase {
 
 
-    public static final String USER_TABLE = "user_table";
+    public static final String USER_TABLE = "usertable";
     private static final String DATABASE_NAME = "GymLogdatabase";
     public static final String GYM_LOG_TABLE = "gymLogTable";
 
