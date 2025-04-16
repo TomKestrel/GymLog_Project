@@ -11,7 +11,7 @@
         android:id="@+id/logDisplayTextView"
         android:layout_width="390dp"
         android:layout_height="200dp"
-        android:layout_marginTop="16dip"
+        android:layout_marginTop="100dip"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
